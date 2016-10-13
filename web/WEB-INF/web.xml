@@ -52,6 +52,34 @@
         <url-pattern>/ProcessOrder.do</url-pattern>
     </servlet-mapping>
     
+    
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>com.mysql.jdbc.Driver</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>connURL</param-name>
+        <param-value>jdbc:mysql://localhost/</param-value>
+    </context-param>
+    
+    
+    <context-param>
+        <param-name>database</param-name>
+        <param-value>pizza_orders</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>password</param-name>
+        <param-value>M23121997m</param-value>
+    </context-param>
+    
+    
     <session-config>
         <session-timeout>
             30

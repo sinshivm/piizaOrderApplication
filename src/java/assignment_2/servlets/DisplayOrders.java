@@ -24,44 +24,65 @@ import javax.servlet.http.HttpSession;
 public class DisplayOrders extends HttpServlet{
     
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        
+        // start session created in BeginOrder servlet
         HttpSession session = request.getSession();
-        
+        // get PizzaOrder class from session's attribute
         PizzaOrder pizzaOrder = (PizzaOrder)session.getAttribute("pizzaOrder");
-        PrintWriter out = response.getWriter();
-        
-        OrderDB orderDB = new OrderDB();
+        // get driver,connURL,database,user and password values from context-param
+        String driver = getServletContext().getInitParameter("driver");
+        String connURL = getServletContext().getInitParameter("connURL");
+        String database = getServletContext().getInitParameter("database");
+        String user = getServletContext().getInitParameter("user");
+        String password  = getServletContext().getInitParameter("password");
+        // create an instance of OrderDB class
+        OrderDB orderDB = new OrderDB(driver , connURL, database, user, password);
+        // initialize the parameters for output of OrderDb class method
         String name = null;
         String phone = null;
         String pizzaSize = null;
         String toppings = null;
         boolean delivery = false;
         double price = 0;
-        
+        // initialize a PrintWriter
+        PrintWriter out = response.getWriter();
         try {
-            
-            response.setContentType("text/html;charset=UTF-8");
+            // craete HTML document
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Process Order</title>"); 
-            out.println("<h1>This is your order </h1>");
-            ArrayList<PizzaOrder> orders = orderDB.displayOrder(pizzaOrder);
-            out.println("<h1>This is your order </h1>");
-            for(int i = 0 ; i<orders.size();i++){
-                name = orders.get(i).getName();
-                phone = orders.get(i).getPhone();
-                pizzaSize = orders.get(i).getPizzaSize();
-                toppings = orders.get(i).getToppings();
-                delivery = orders.get(i).isDelivery();
-                price = orders.get(i).getPrice();
-                
-                out.println("<p>"+ name +" " + phone + " "+pizzaSize +" " +" "+toppings+" " + delivery+" " + price+"</p>");
+            // print the parameter in table format
+            out.println("<table>");
+            // defualt row
+            out.println("<tr><th>Name</th><th>Phone</th><th>Pizza Size</th>"
+                    + "<th>Toppings</th><th>Delivery</th><th>Price</th></tr>");
+            // for each element from orderDb class displayOrder method print it 
+            // in the table format
+            for(int i = 0 ; i<orderDB.displayOrder().size();i++){
+                // assign elemnt of displayOrder method to the PizzaOrder class instance 
+                // pizzaOrder
+                pizzaOrder = orderDB.displayOrder().get(i);
+                // get all parameters from pizzaOrder object
+                name = pizzaOrder.getName();
+                phone = pizzaOrder.getPhone();
+                pizzaSize = pizzaOrder.getPizzaSize();
+                toppings = pizzaOrder.getToppings();
+                delivery = pizzaOrder.isDelivery();
+                price = pizzaOrder.getPrice();
+                // print them in the table format
+                out.println("<tr><th>"+ name +"</th><th>" + phone + "</th><th>"
+                        +pizzaSize +"</th><th>" +toppings+"</th><th>" + delivery+"</th><th>" + price+"</th></tr>");
             }
+            // close tabel
+            out.println("</table>");
             out.println("</body>");
             out.println("</html>");
         } catch (Exception ex) {
-           System.out.println(ex);
+            // print exceptions
+            System.out.println(ex);
+        }finally{
+            // close the PrintWriter
+            out.close();
         }
     }
 }
