@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>BeginOrder</servlet-name>
+        <servlet-class>assignment_2.servlets.BeginOrder</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BeginOrder</servlet-name>
+        <url-pattern>/BeginOrder.do</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>DisplayOrders</servlet-name>
+        <servlet-class>assignment_2.servlets.DisplayOrders</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DisplayOrders</servlet-name>
+        <url-pattern>/DisplayOrders.do</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>PlaceOrder</servlet-name>
+        <servlet-class>assignment_2.servlets.PlaceOrder</servlet-class>
+        <init-param>
+            <param-name>method</param-name>
+            <param-value>"POST"</param-value>
+        </init-param>
+        <init-param>
+            <param-name>action</param-name>
+            <param-value>"ProcessOrder.do"</param-value>
+        </init-param>
+        <init-param>
+            <param-name>selectPickup</param-name>
+            <param-value>"pickup"</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>PlaceOrder</servlet-name>
+        <url-pattern>/PlaceOrder.do</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>ProcessOrder</servlet-name>
+        <servlet-class>assignment_2.servlets.ProcessOrder</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProcessOrder</servlet-name>
+        <url-pattern>/ProcessOrder.do</url-pattern>
+    </servlet-mapping>
+    
+    
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>com.mysql.jdbc.Driver</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>connURL</param-name>
+        <param-value>jdbc:mysql://localhost/</param-value>
+    </context-param>
+    
+    
+    <context-param>
+        <param-name>database</param-name>
+        <param-value>pizza_orders</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>password</param-name>
+        <param-value>M23121997m</param-value>
+    </context-param>
+    
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
